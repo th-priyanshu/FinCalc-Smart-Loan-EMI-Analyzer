@@ -14,7 +14,7 @@ connectDB();
 
 // Middleware
 app.use(cors({
-  origin: ["http://localhost:5173", "https://incomparable-salmiakki-c6a260.netlify.app"], // ⭐ FIX: Trailing slash removed
+  origin: ["http://localhost:5173", "https://emi-loan-web-app-priyanshu.netlify.app"], // ⭐ FIX: Trailing slash removed
   methods: ["GET", "POST"],
   credentials: true,
 }));
