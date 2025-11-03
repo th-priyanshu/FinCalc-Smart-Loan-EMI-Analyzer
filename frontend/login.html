@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login | Loan Calculator</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
@@ -14,10 +14,10 @@
 
     <div class="form">
       <label>Name</label>
-      <input type="text" id="name" placeholder="Enter your name">
+      <input type="text" id="name" placeholder="Enter your name" />
 
       <label>Email</label>
-      <input type="email" id="email" placeholder="Enter your email">
+      <input type="email" id="email" placeholder="Enter your email" />
 
       <button onclick="signup()">Signup</button>
       <button onclick="login()" class="secondary">Login</button>
@@ -25,46 +25,63 @@
     <p id="msg" style="margin-top:10px;"></p>
   </div>
 
+  <!-- Import backend URL -->
+  <script src="config.js"></script>
+
   <script>
-    const baseURL = "http://localhost:5000";
+    async function signup() {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
 
-    function signup() {
-      const name = document.getElementById("name").value;
-      const email = document.getElementById("email").value;
+      if (!name || !email) {
+        document.getElementById("msg").innerText = "⚠️ Please fill all fields.";
+        return;
+      }
 
-      fetch(baseURL + "/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email }),
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.user) {
-            localStorage.setItem("user", JSON.stringify(data.user));
-            window.location.href = "index.html";
-          } else {
-            document.getElementById("msg").innerText = data.error || data.message;
-          }
+      try {
+        const res = await fetch(`${BASE_URL}/signup`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email }),
         });
+        const data = await res.json();
+
+        if (data.user) {
+          localStorage.setItem("user", JSON.stringify(data.user));
+          window.location.href = "index.html";
+        } else {
+          document.getElementById("msg").innerText = data.error || data.message;
+        }
+      } catch (err) {
+        document.getElementById("msg").innerText = "❌ Server not reachable.";
+      }
     }
 
-    function login() {
-      const email = document.getElementById("email").value;
+    async function login() {
+      const email = document.getElementById("email").value.trim();
 
-      fetch(baseURL + "/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.user) {
-            localStorage.setItem("user", JSON.stringify(data.user));
-            window.location.href = "index.html";
-          } else {
-            document.getElementById("msg").innerText = data.error || data.message;
-          }
+      if (!email) {
+        document.getElementById("msg").innerText = "⚠️ Enter your email.";
+        return;
+      }
+
+      try {
+        const res = await fetch(`${BASE_URL}/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
         });
+        const data = await res.json();
+
+        if (data.user) {
+          localStorage.setItem("user", JSON.stringify(data.user));
+          window.location.href = "index.html";
+        } else {
+          document.getElementById("msg").innerText = data.error || data.message;
+        }
+      } catch (err) {
+        document.getElementById("msg").innerText = "❌ Server not reachable.";
+      }
     }
   </script>
 </body>

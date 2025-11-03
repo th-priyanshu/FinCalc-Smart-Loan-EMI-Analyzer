@@ -1,6 +1,4 @@
-// 🌐 Backend base URL (your deployed Vercel backend)
-const BASE_URL = "https://emi-loan.vercel.app";
-
+// script.js
 document.addEventListener("DOMContentLoaded", async () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const welcome = document.getElementById("welcomeUser");
@@ -26,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     if (months <= 50) {
-      months = months * 12;
+      months = months * 12; // convert years → months
     }
 
     const monthlyRate = rate / 12 / 100;

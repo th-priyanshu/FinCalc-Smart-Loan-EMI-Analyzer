@@ -13,7 +13,7 @@ connectDB();
 
 // Middleware
 app.use(cors({
-  origin: ["http://localhost:5173", "https://emi-loan-frontend.netlify.app"], // update Netlify URL after deployment
+  origin: ["http://localhost:5173", "https://incomparable-salmiakki-c6a260.netlify.app/"], // update Netlify URL after deployment
   methods: ["GET", "POST"],
   credentials: true,
 }));
