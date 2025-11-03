@@ -9,7 +9,6 @@ const User = require("./models/User");
 
 const app = express();
 
-// Connect to MongoDB
 connectDB();
 
 // Middleware
